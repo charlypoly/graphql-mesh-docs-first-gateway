@@ -39,9 +39,8 @@ More information on https://graphql-mesh.com/docs/howtos/combine-many-sources.
 
 
 ### Authors API (gRPC)
-- list
-- one
-
+- `GetAuthor`
+- `ListAuthors`
 
 ### Stores (GraphQL)
 - `stores` Query
