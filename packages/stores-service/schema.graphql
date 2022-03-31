@@ -8,9 +8,10 @@ type Sells {
   bookId: ID!
   sellsCount: Int!
   monthYear: String
+  storeId: ID!
 }
 
 type Query {
   stores: [Store!]!
-  bookSells: [Sells!]!
+  bookSells(storeId: ID!): [Sells!]!
 }

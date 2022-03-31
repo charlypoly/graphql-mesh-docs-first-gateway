@@ -4,6 +4,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -19,11 +20,17 @@ export type Query = {
   stores: Array<Store>;
 };
 
+
+export type QueryBookSellsArgs = {
+  storeId: Scalars['ID'];
+};
+
 export type Sells = {
   __typename?: 'Sells';
   bookId: Scalars['ID'];
   monthYear?: Maybe<Scalars['String']>;
   sellsCount: Scalars['Int'];
+  storeId: Scalars['ID'];
 };
 
 export type Store = {
@@ -38,12 +45,11 @@ export type ResolversObject<TObject> = WithIndex<TObject>;
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
+
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -90,11 +96,7 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
-  obj: T,
-  context: TContext,
-  info: GraphQLResolveInfo
-) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
@@ -128,28 +130,20 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String'];
 }>;
 
-export type QueryResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
-> = ResolversObject<{
-  bookSells?: Resolver<Array<ResolversTypes['Sells']>, ParentType, ContextType>;
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  bookSells?: Resolver<Array<ResolversTypes['Sells']>, ParentType, ContextType, RequireFields<QueryBookSellsArgs, 'storeId'>>;
   stores?: Resolver<Array<ResolversTypes['Store']>, ParentType, ContextType>;
 }>;
 
-export type SellsResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Sells'] = ResolversParentTypes['Sells']
-> = ResolversObject<{
+export type SellsResolvers<ContextType = any, ParentType extends ResolversParentTypes['Sells'] = ResolversParentTypes['Sells']> = ResolversObject<{
   bookId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   monthYear?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sellsCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  storeId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type StoreResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']
-> = ResolversObject<{
+export type StoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   location?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -161,3 +155,4 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Sells?: SellsResolvers<ContextType>;
   Store?: StoreResolvers<ContextType>;
 }>;
+

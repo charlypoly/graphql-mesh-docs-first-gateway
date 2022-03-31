@@ -25,18 +25,34 @@ const bookSells: Sells[] = [
     sellsCount: 1932,
     monthYear: '03/22',
     __typename: 'Sells',
+    storeId: '0'
   },
   {
     bookId: '1',
     sellsCount: 192,
     monthYear: '03/22',
     __typename: 'Sells',
+    storeId: '0'
+  },
+  {
+    bookId: '0',
+    sellsCount: 2387,
+    monthYear: '03/22',
+    __typename: 'Sells',
+    storeId: '1'
+  },
+  {
+    bookId: '1',
+    sellsCount: 283,
+    monthYear: '03/22',
+    __typename: 'Sells',
+    storeId: '1'
   },
 ];
 
 const resolvers: Resolvers = {
   Query: {
-    bookSells: () => bookSells,
+    bookSells: (_p, args) => bookSells.filter(bs => bs.storeId === args.storeId),
     stores: () => stores,
   },
 };

@@ -44,4 +44,4 @@ More information on https://graphql-mesh.com/docs/howtos/combine-many-sources.
 
 ### Stores (GraphQL)
 - `stores` Query
-- `bookSells` Query
+- `bookSells(storeId: ID!)` Query

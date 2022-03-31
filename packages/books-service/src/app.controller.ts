@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { Book } from './entities/Book';
 import { Category } from './entities/Category';
@@ -7,7 +7,7 @@ import { Category } from './entities/Category';
 @ApiTags('books')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get('/books')
   @ApiResponse({
@@ -35,6 +35,11 @@ export class AppController {
     status: 404,
   })
   @Get('/books/:id')
+  @ApiParam({
+    name: 'id',
+    required: true,
+    type: String
+  })
   findOne(@Param() params) {
     return this.appService.findOneBook(params.id);
   }
