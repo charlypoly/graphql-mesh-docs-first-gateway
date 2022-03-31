@@ -1,0 +1,46 @@
+schema {
+  query: Query
+}
+
+type Query {
+  """
+  
+  
+  Equivalent to GET /books/{id}
+  """
+  book(id: String!): Book
+  """
+  
+  
+  Equivalent to GET /books
+  """
+  books(
+    """
+    Auto-generated argument that limits the size of returned list of objects/list, selecting the first `n` elements of the list
+    """
+    limit: Int
+  ): [Book]
+  """
+  
+  
+  Equivalent to GET /categories
+  """
+  categories(
+    """
+    Auto-generated argument that limits the size of returned list of objects/list, selecting the first `n` elements of the list
+    """
+    limit: Int
+  ): [Category]
+}
+
+type Book {
+  authorId: String!
+  categorieId: String!
+  id: String!
+  title: String!
+}
+
+type Category {
+  id: String!
+  name: String!
+}

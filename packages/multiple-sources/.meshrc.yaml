@@ -14,30 +14,9 @@ sources:
       graphql:
         endpoint: http://0.0.0.0:3004/graphql
 transforms:
-  - rename:
-      renames:
-        - from:
-            type: Query
-            field: categories
-          to:
-            type: Query
-            field: booksCategories
-        - from:
-            type: Query
-            field: authors_v1_AuthorsService_GetAuthor
-          to:
-            type: Query
-            field: author
-        - from:
-            type: Query
-            field: authors_v1_AuthorsService_ListAuthors
-          to:
-            type: Query
-            field: authors
   - filterSchema:
       filters:
-        - Query.!authors_v1_AuthorsService_connectivityState
-        - Query.!{authors, books, bookSells}
+        - Query.stores
 additionalTypeDefs: |
   extend type Store {
     bookSells: [Sells!]!
