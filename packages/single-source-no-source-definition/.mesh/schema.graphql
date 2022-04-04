@@ -1,0 +1,10 @@
+type Query {
+  book(id: ID): query_book
+}
+
+type query_book {
+  id: String
+  title: String
+  authorId: String
+  categorieId: String
+}

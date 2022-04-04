@@ -9,6 +9,7 @@
 yarn workspaces run build
 ```
 
+
 ### Start the single source (Books Gateway) Mesh Gateway
 
 ```
@@ -16,6 +17,18 @@ yarn run start-single-source
 ```
 
 More information on https://graphql-mesh.com/docs/getting-started/your-first-mesh-gateway.
+
+
+<p>&nbsp;</p>
+
+
+### Start the single source (Books API without definition) Mesh Gateway
+
+```
+yarn run single-source-no-source-definition
+```
+
+More information on https://graphql-mesh.com/docs/howtos/sources-with-no-definition
 
 
 <p>&nbsp;</p>

@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start-single-source": "concurrently --kill-others \"yarn workspace books-service start\" \"yarn workspace mesh-single-source start\"",
+    "single-source-no-source-definition": "concurrently --kill-others \"yarn workspace books-service start\" \"yarn workspace single-source-no-source-definition start\"",
     "start-multiple-sources": "concurrently --kill-others \"yarn workspace authors-service start\" \"yarn workspace stores-service start\"  \"yarn workspace books-service start\"  \"yarn workspace mesh-multiple-sources start\""
   },
   "dependencies": {
