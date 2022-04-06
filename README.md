@@ -28,7 +28,7 @@ More information on https://graphql-mesh.com/docs/getting-started/your-first-mes
 yarn run single-source-no-source-definition
 ```
 
-More information on https://graphql-mesh.com/docs/howtos/sources-with-no-definition
+More information on https://graphql-mesh.com/docs/getting-started/sources-with-no-definition
 
 
 <p>&nbsp;</p>
@@ -39,7 +39,7 @@ More information on https://graphql-mesh.com/docs/howtos/sources-with-no-definit
 yarn run start-multiple-sources
 ```
 
-More information on https://graphql-mesh.com/docs/howtos/combine-many-sources.
+More information on https://graphql-mesh.com/docs/getting-started/combine-many-sources.
 
 ----
 
