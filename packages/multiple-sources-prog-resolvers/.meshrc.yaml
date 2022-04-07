@@ -1,0 +1,70 @@
+sources:
+  - name: Books
+    handler:
+      openapi:
+        baseUrl: http://localhost:3002/
+        source: ../books-service/openapi3-definition.json
+  - name: Authors
+    handler:
+      grpc:
+        endpoint: localhost:3003
+        protoFilePath: ../authors-service/proto/authors/v1/authors_service.proto
+  - name: Stores
+    handler:
+      graphql:
+        endpoint: http://0.0.0.0:3004/graphql
+transforms:
+  - filterSchema:
+      filters:
+        - Query.stores
+additionalTypeDefs: |
+  extend type Store {
+    bookSells: [Sells!]!
+  }
+  extend type Sells {
+    book: Book
+  }
+  extend type Book {
+    author: authors_v1_Author
+  }
+
+additionalResolvers: 
+    - "./resolvers"
+
+# additionalResolvers:
+#   - targetTypeName: Store
+#     targetFieldName: bookSells
+#     sourceName: Stores # Which source does the target field belong to?
+#     sourceTypeName: Query # Which root type does the target field belong to?
+#     sourceFieldName: bookSells # What is the source field name?
+#     requiredSelectionSet:
+#       |
+#       {
+#         id
+#       }
+#     sourceArgs: # What args does this need to take?
+#       storeId: "{root.id}"
+#   - targetTypeName: Sells
+#     targetFieldName: book
+#     sourceName: Books # Which source does the target field belong to?
+#     sourceTypeName: Query # Which root type does the target field belong to?
+#     sourceFieldName: book # What is the source field name?
+#     requiredSelectionSet:
+#       |
+#       {
+#         bookId
+#       }
+#     sourceArgs: # What args does this need to take?
+#       id: "{root.bookId}"
+#   - targetTypeName: Book
+#     targetFieldName: author
+#     sourceName: Authors # Which source does the target field belong to?
+#     sourceTypeName: Query # Which root type does the target field belong to?
+#     sourceFieldName: authors_v1_AuthorsService_GetAuthor # What is the source field name?
+#     requiredSelectionSet:
+#       |
+#       {
+#         authorId
+#       }
+#     sourceArgs: # What args does this need to take?
+#       input.id: "{root.authorId}"

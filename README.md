@@ -1,6 +1,6 @@
 # GraphQL Mesh Services examples
 
-## Getting started
+## Setup
 
 
 ### Build all APIs
@@ -9,6 +9,9 @@
 yarn workspaces run build
 ```
 
+<p>&nbsp;</p>
+
+## Examples
 
 ### Start the single source (Books Gateway) Mesh Gateway
 
@@ -41,7 +44,22 @@ yarn run start-multiple-sources
 
 More information on https://graphql-mesh.com/docs/getting-started/combine-many-sources.
 
+<p>&nbsp;</p>
+
+### Start the multiple sources Mesh Gateway (with programmatic resolvers)
+
+```
+yarn run start-multiple-sources-prog-resolvers
+```
+
+More information on https://graphql-mesh.com/docs/guides/extending-unified-schema#extending-the-unified-schema.
+
+
+<p>&nbsp;</p>
+
 ----
+
+<p>&nbsp;</p>
 
 ## Services
 

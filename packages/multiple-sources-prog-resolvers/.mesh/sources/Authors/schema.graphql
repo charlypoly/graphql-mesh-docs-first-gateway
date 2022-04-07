@@ -1,0 +1,33 @@
+schema {
+  query: Query
+}
+
+type Query {
+  authors_v1_AuthorsService_GetAuthor(input: authors_v1_GetAuthorRequest_Input): authors_v1_Author
+  authors_v1_AuthorsService_ListAuthors(input: authors_v1_ListAuthorsRequest_Input): authors_v1_ListAuthorsResponse
+  authors_v1_AuthorsService_connectivityState(tryToConnect: Boolean): ConnectivityState
+}
+
+type authors_v1_Author {
+  id: String
+  name: String
+  editor: String
+}
+
+input authors_v1_GetAuthorRequest_Input {
+  id: String
+}
+
+type authors_v1_ListAuthorsResponse {
+  items: [authors_v1_Author]
+}
+
+scalar authors_v1_ListAuthorsRequest_Input @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+enum ConnectivityState {
+  IDLE
+  CONNECTING
+  READY
+  TRANSIENT_FAILURE
+  SHUTDOWN
+}

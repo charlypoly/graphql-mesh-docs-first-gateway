@@ -1,0 +1,55 @@
+type Query {
+  stores: [Store!]!
+}
+
+type Book {
+  authorId: String!
+  categorieId: String!
+  id: String!
+  title: String!
+  author: authors_v1_Author
+}
+
+type Category {
+  id: String!
+  name: String!
+}
+
+type authors_v1_Author {
+  id: String
+  name: String
+  editor: String
+}
+
+input authors_v1_GetAuthorRequest_Input {
+  id: String
+}
+
+type authors_v1_ListAuthorsResponse {
+  items: [authors_v1_Author]
+}
+
+scalar authors_v1_ListAuthorsRequest_Input
+
+enum ConnectivityState {
+  IDLE
+  CONNECTING
+  READY
+  TRANSIENT_FAILURE
+  SHUTDOWN
+}
+
+type Store {
+  id: ID!
+  name: String!
+  location: String!
+  bookSells: [Sells!]!
+}
+
+type Sells {
+  bookId: ID!
+  sellsCount: Int!
+  monthYear: String
+  storeId: ID!
+  book: Book
+}
