@@ -13,8 +13,8 @@
     "@grpc/grpc-js": "^1.5.10"
   },
   "devDependencies": {
-    "@protobuf-ts/plugin": "^2.4.0",
-    "esbuild": "^0.14.29",
+    "@protobuf-ts/plugin": "2.8.1",
+    "esbuild": "0.15.9",
     "grpc-tools": "^1.11.2"
   }
 }
