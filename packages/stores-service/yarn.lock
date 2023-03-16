@@ -504,9 +504,7 @@
     tiny-lru "7.0.6"
 
 "@graphql-codegen/cli@^2.6.2":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-2.6.2.tgz#a9aa4656141ee0998cae8c7ad7d0bf9ca8e0c9ae"
-  integrity sha512-UO75msoVgvLEvfjCezM09cQQqp32+mR8Ma1ACsBpr7nroFvHbgcu2ulx1cMovg4sxDBCsvd9Eq/xOOMpARUxtw==
+  version "2.16.5"
   dependencies:
     "@graphql-codegen/core" "2.5.1"
     "@graphql-codegen/plugin-helpers" "^2.4.1"
@@ -581,9 +579,7 @@
     tslib "~2.3.0"
 
 "@graphql-codegen/typescript-resolvers@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-resolvers/-/typescript-resolvers-2.6.1.tgz#5963da60de79cfb847b55b2433cd9f65a33d7aad"
-  integrity sha512-tb8qiIYRDbypHvEVBi04OlItABPeormhd6gh26Q0FO/dD+tLx1V85A6wnHC4jExWPP9+/3PwHJL1pq/0n1kxlA==
+  version "2.7.13"
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.4.0"
     "@graphql-codegen/typescript" "^2.4.8"
@@ -593,9 +589,7 @@
     tslib "~2.3.0"
 
 "@graphql-codegen/typescript@^2.4.8":
-  version "2.4.8"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.4.8.tgz#e8110baba9713cde72d57a5c95aa27400363ed9a"
-  integrity sha512-tVsHIkuyenBany7c5IMU1yi4S1er2hgyXJGNY7PcyhpJMx0eChmbqz1VTiZxDEwi8mDBS2mn3TaSJMh6xuJM5g==
+  version "2.8.8"
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.4.0"
     "@graphql-codegen/schema-ast" "^2.4.1"
@@ -2711,15 +2705,10 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-ms@2.1.2:
+ms@2.1.2, ms@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-
-ms@^2.1.1:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
-  integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
 mute-stream@0.0.8:
   version "0.0.8"
