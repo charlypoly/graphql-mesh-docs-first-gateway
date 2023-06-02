@@ -429,9 +429,7 @@ glob@^7.1.3:
     path-is-absolute "^1.0.0"
 
 grpc-tools@^1.11.2:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/grpc-tools/-/grpc-tools-1.11.2.tgz#22d802d40012510ccc6591d11f9c94109ac07aab"
-  integrity sha512-4+EgpnnkJraamY++oyBCw5Hp9huRYfgakjNVKbiE3PgO9Tv5ydVlRo7ZyGJ0C0SEiA7HhbVc1sNNtIyK7FiEtg==
+  version "1.12.4"
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.5"
 
