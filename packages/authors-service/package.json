@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@protobuf-ts/plugin": "^2.4.0",
-    "esbuild": "^0.14.29",
+    "esbuild": "^0.18.0",
     "grpc-tools": "^1.11.2"
   }
 }
