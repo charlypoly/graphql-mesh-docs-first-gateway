@@ -7,7 +7,7 @@ import { Category } from './entities/Category';
 @ApiTags('books')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get('/books')
   @ApiResponse({
@@ -38,7 +38,7 @@ export class AppController {
   @ApiParam({
     name: 'id',
     required: true,
-    type: String
+    type: String,
   })
   findOne(@Param() params) {
     return this.appService.findOneBook(params.id);
