@@ -14,7 +14,7 @@ export class AppController {
     status: 200,
     type: [Book],
   })
-  listBooks() {
+  books() {
     return this.appService.listBooks();
   }
 
@@ -23,7 +23,7 @@ export class AppController {
     status: 200,
     type: [Category],
   })
-  listBookCategories() {
+  categories() {
     return this.appService.listBookCategories();
   }
 
@@ -40,7 +40,7 @@ export class AppController {
     required: true,
     type: String,
   })
-  findOne(@Param() params) {
+  book(@Param() params) {
     return this.appService.findOneBook(params.id);
   }
 }

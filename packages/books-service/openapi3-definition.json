@@ -3,7 +3,7 @@
   "paths": {
     "/books": {
       "get": {
-        "operationId": "AppController_listBooks",
+        "operationId": "AppController_books",
         "parameters": [],
         "responses": {
           "200": {
@@ -27,7 +27,7 @@
     },
     "/categories": {
       "get": {
-        "operationId": "AppController_listBookCategories",
+        "operationId": "AppController_categories",
         "parameters": [],
         "responses": {
           "200": {
@@ -51,7 +51,7 @@
     },
     "/books/{id}": {
       "get": {
-        "operationId": "AppController_findOne",
+        "operationId": "AppController_book",
         "parameters": [
           {
             "name": "id",
