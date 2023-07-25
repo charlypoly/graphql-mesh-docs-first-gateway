@@ -2,10 +2,26 @@ schema {
   query: Query
 }
 
-type Query {
-  authors_v1_AuthorsService_GetAuthor(input: authors_v1_GetAuthorRequest_Input): authors_v1_Author
-  authors_v1_AuthorsService_ListAuthors(input: authors_v1_ListAuthorsRequest_Input): authors_v1_ListAuthorsResponse
-  authors_v1_AuthorsService_connectivityState(tryToConnect: Boolean): ConnectivityState
+directive @grpcMethod(rootJsonName: String, objPath: String, methodName: String, responseStream: Boolean) on FIELD_DEFINITION
+
+directive @grpcConnectivityState(rootJsonName: String, objPath: String) on FIELD_DEFINITION
+
+directive @grpcRootJson(name: String, rootJson: ObjMap, loadOptions: ObjMap) repeatable on OBJECT
+
+"Directs the executor to stream plural fields when the `if` argument is true or undefined."
+directive @stream(
+  """Stream when true or undefined."""
+  if: Boolean! = true
+  """Unique name"""
+  label: String
+  """Number of items to return immediately"""
+  initialCount: Int = 0
+) on FIELD
+
+type Query @grpcRootJson(name: "Root0", rootJson: "{\"nested\":{\"authors\":{\"nested\":{\"v1\":{\"nested\":{\"AuthorsService\":{\"methods\":{\"GetAuthor\":{\"requestType\":\"GetAuthorRequest\",\"responseType\":\"Author\",\"comment\":null},\"ListAuthors\":{\"requestType\":\"ListAuthorsRequest\",\"responseType\":\"ListAuthorsResponse\",\"comment\":null}},\"comment\":null},\"ListAuthorsRequest\":{\"fields\":{},\"comment\":null},\"GetAuthorRequest\":{\"fields\":{\"id\":{\"type\":\"string\",\"id\":1,\"comment\":null}},\"comment\":null},\"ListAuthorsResponse\":{\"fields\":{\"items\":{\"rule\":\"repeated\",\"type\":\"Author\",\"id\":1,\"comment\":null}},\"comment\":null},\"Author\":{\"fields\":{\"id\":{\"type\":\"string\",\"id\":1,\"comment\":null},\"name\":{\"type\":\"string\",\"id\":2,\"comment\":null},\"editor\":{\"type\":\"string\",\"id\":3,\"comment\":null}},\"comment\":null}}}}}}}") {
+  authors_v1_AuthorsService_GetAuthor(input: authors_v1_GetAuthorRequest_Input): authors_v1_Author @grpcMethod(rootJsonName: "Root0", objPath: "authors.v1.AuthorsService", methodName: "GetAuthor", responseStream: false)
+  authors_v1_AuthorsService_ListAuthors(input: authors_v1_ListAuthorsRequest_Input): authors_v1_ListAuthorsResponse @grpcMethod(rootJsonName: "Root0", objPath: "authors.v1.AuthorsService", methodName: "ListAuthors", responseStream: false)
+  authors_v1_AuthorsService_connectivityState(tryToConnect: Boolean): ConnectivityState @grpcConnectivityState(rootJsonName: "Root0", objPath: "authors.v1.AuthorsService")
 }
 
 type authors_v1_Author {
@@ -31,3 +47,5 @@ enum ConnectivityState {
   TRANSIENT_FAILURE
   SHUTDOWN
 }
+
+scalar ObjMap

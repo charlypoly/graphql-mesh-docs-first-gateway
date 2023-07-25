@@ -1,18 +1,73 @@
-type Query {
+schema {
+  query: Query
+}
+
+directive @globalOptions(sourceName: String, endpoint: String, operationHeaders: ObjMap, queryStringOptions: ObjMap, queryParams: ObjMap) on OBJECT
+
+directive @httpOperation(path: String, operationSpecificHeaders: ObjMap, httpMethod: HTTPMethod, isBinary: Boolean, requestBaseBody: ObjMap, queryParamArgMap: ObjMap, queryStringOptionsByParam: ObjMap) on FIELD_DEFINITION
+
+directive @grpcMethod(rootJsonName: String, objPath: String, methodName: String, responseStream: Boolean) on FIELD_DEFINITION
+
+directive @grpcConnectivityState(rootJsonName: String, objPath: String) on FIELD_DEFINITION
+
+directive @grpcRootJson(name: String, rootJson: ObjMap, loadOptions: ObjMap) repeatable on OBJECT
+
+"Directs the executor to stream plural fields when the `if` argument is true or undefined."
+directive @stream(
+  """Stream when true or undefined."""
+  if: Boolean! = true
+  """Unique name"""
+  label: String
+  """Number of items to return immediately"""
+  initialCount: Int = 0
+) on FIELD
+
+directive @resolveTo(requiredSelectionSet: String, sourceName: String!, sourceTypeName: String!, sourceFieldName: String!, sourceSelectionSet: String, sourceArgs: ResolveToSourceArgs, keyField: String, keysArg: String, pubsubTopic: String, filterBy: String, additionalArgs: ResolveToSourceArgs, result: String, resultType: String) on FIELD_DEFINITION
+
+type Query @globalOptions(sourceName: "Books", endpoint: "http://localhost:3002/") @grpcRootJson(name: "Root0", rootJson: "{\"nested\":{\"authors\":{\"nested\":{\"v1\":{\"nested\":{\"AuthorsService\":{\"methods\":{\"GetAuthor\":{\"requestType\":\"GetAuthorRequest\",\"responseType\":\"Author\",\"comment\":null},\"ListAuthors\":{\"requestType\":\"ListAuthorsRequest\",\"responseType\":\"ListAuthorsResponse\",\"comment\":null}},\"comment\":null},\"ListAuthorsRequest\":{\"fields\":{},\"comment\":null},\"GetAuthorRequest\":{\"fields\":{\"id\":{\"type\":\"string\",\"id\":1,\"comment\":null}},\"comment\":null},\"ListAuthorsResponse\":{\"fields\":{\"items\":{\"rule\":\"repeated\",\"type\":\"Author\",\"id\":1,\"comment\":null}},\"comment\":null},\"Author\":{\"fields\":{\"id\":{\"type\":\"string\",\"id\":1,\"comment\":null},\"name\":{\"type\":\"string\",\"id\":2,\"comment\":null},\"editor\":{\"type\":\"string\",\"id\":3,\"comment\":null}},\"comment\":null}}}}}}}") {
   stores: [Store!]!
 }
 
 type Book {
+  id: String!
   authorId: String!
   categorieId: String!
-  id: String!
   title: String!
-  author: authors_v1_Author
+  author: authors_v1_Author @resolveTo(sourceName: "Authors", sourceTypeName: "Query", sourceFieldName: "authors_v1_AuthorsService_GetAuthor", requiredSelectionSet: "{ authorId }", sourceArgs: {input: {id: "{root.authorId}"}})
 }
 
 type Category {
   id: String!
   name: String!
+}
+
+scalar ObjMap
+
+enum HTTPMethod {
+  GET
+  HEAD
+  POST
+  PUT
+  DELETE
+  CONNECT
+  OPTIONS
+  TRACE
+  PATCH
+}
+
+type Store {
+  id: ID!
+  name: String!
+  location: String!
+  bookSells: [Sells!]! @resolveTo(sourceName: "Stores", sourceTypeName: "Query", sourceFieldName: "bookSells", requiredSelectionSet: "{ id }", sourceArgs: {storeId: "{root.id}"})
+}
+
+type Sells {
+  bookId: ID!
+  sellsCount: Int!
+  monthYear: String
+  storeId: ID!
+  book: Book @resolveTo(sourceName: "Books", sourceTypeName: "Query", sourceFieldName: "AppController_book", requiredSelectionSet: "{ bookId }", sourceArgs: {id: "{root.bookId}"})
 }
 
 type authors_v1_Author {
@@ -29,7 +84,7 @@ type authors_v1_ListAuthorsResponse {
   items: [authors_v1_Author]
 }
 
-scalar authors_v1_ListAuthorsRequest_Input
+scalar authors_v1_ListAuthorsRequest_Input @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
 enum ConnectivityState {
   IDLE
@@ -39,17 +94,4 @@ enum ConnectivityState {
   SHUTDOWN
 }
 
-type Store {
-  id: ID!
-  name: String!
-  location: String!
-  bookSells: [Sells!]!
-}
-
-type Sells {
-  bookId: ID!
-  sellsCount: Int!
-  monthYear: String
-  storeId: ID!
-  book: Book
-}
+scalar ResolveToSourceArgs
