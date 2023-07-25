@@ -1,37 +1,59 @@
 // @ts-nocheck
-import { GraphQLResolveInfo } from 'graphql';
-
+import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { findAndParseConfig } from '@graphql-mesh/cli';
+import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
+import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
+import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
+import { path as pathModule } from '@graphql-mesh/cross-helpers';
+import { ImportFn } from '@graphql-mesh/types';
+import type { BooksTypes } from './sources/Books/types';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+
+
+
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  /** The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID. */
-  ID: string;
+  ID: { input: string; output: string; }
   /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  ObjMap: { input: any; output: any; }
 };
 
 export type Query = {
-  book?: Maybe<query_book>;
+  book?: Maybe<Book>;
 };
 
 
 export type QuerybookArgs = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type query_book = {
-  id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  authorId?: Maybe<Scalars['String']>;
-  categorieId?: Maybe<Scalars['String']>;
+export type Book = {
+  id?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  authorId?: Maybe<Scalars['String']['output']>;
+  categorieId?: Maybe<Scalars['String']['output']>;
 };
+
+export type HTTPMethod =
+  | 'GET'
+  | 'HEAD'
+  | 'POST'
+  | 'PUT'
+  | 'DELETE'
+  | 'CONNECT'
+  | 'OPTIONS'
+  | 'TRACE'
+  | 'PATCH';
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
@@ -42,7 +64,21 @@ export type ResolverTypeWrapper<T> = Promise<T> | T;
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+
+export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  selectionSet: string | ((fieldNode: FieldNode) => SelectionSetNode);
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | ResolverWithResolve<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -101,29 +137,60 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
-  query_book: ResolverTypeWrapper<query_book>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Book: ResolverTypeWrapper<Book>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  ObjMap: ResolverTypeWrapper<Scalars['ObjMap']['output']>;
+  HTTPMethod: HTTPMethod;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
-  ID: Scalars['ID'];
-  query_book: query_book;
-  String: Scalars['String'];
-  Boolean: Scalars['Boolean'];
+  Book: Book;
+  String: Scalars['String']['output'];
+  Boolean: Scalars['Boolean']['output'];
+  ObjMap: Scalars['ObjMap']['output'];
 }>;
+
+export type exampleDirectiveArgs = {
+  value?: Maybe<Scalars['ObjMap']['input']>;
+};
+
+export type exampleDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = exampleDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type globalOptionsDirectiveArgs = {
+  sourceName?: Maybe<Scalars['String']['input']>;
+  endpoint?: Maybe<Scalars['String']['input']>;
+  operationHeaders?: Maybe<Scalars['ObjMap']['input']>;
+  queryStringOptions?: Maybe<Scalars['ObjMap']['input']>;
+  queryParams?: Maybe<Scalars['ObjMap']['input']>;
+};
+
+export type globalOptionsDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = globalOptionsDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type httpOperationDirectiveArgs = {
+  path?: Maybe<Scalars['String']['input']>;
+  operationSpecificHeaders?: Maybe<Scalars['ObjMap']['input']>;
+  httpMethod?: Maybe<HTTPMethod>;
+  isBinary?: Maybe<Scalars['Boolean']['input']>;
+  requestBaseBody?: Maybe<Scalars['ObjMap']['input']>;
+  queryParamArgMap?: Maybe<Scalars['ObjMap']['input']>;
+  queryStringOptionsByParam?: Maybe<Scalars['ObjMap']['input']>;
+};
+
+export type httpOperationDirectiveResolver<Result, Parent, ContextType = MeshContext, Args = httpOperationDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type QueryResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  book?: Resolver<Maybe<ResolversTypes['query_book']>, ParentType, ContextType, Partial<QuerybookArgs>>;
+  book?: Resolver<Maybe<ResolversTypes['Book']>, ParentType, ContextType, Partial<QuerybookArgs>>;
 }>;
 
-export type query_bookResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['query_book'] = ResolversParentTypes['query_book']> = ResolversObject<{
+export type BookResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   authorId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -131,127 +198,78 @@ export type query_bookResolvers<ContextType = MeshContext, ParentType extends Re
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export interface ObjMapScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['ObjMap'], any> {
+  name: 'ObjMap';
+}
+
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
-  query_book?: query_bookResolvers<ContextType>;
+  Book?: BookResolvers<ContextType>;
+  ObjMap?: GraphQLScalarType;
 }>;
 
+export type DirectiveResolvers<ContextType = MeshContext> = ResolversObject<{
+  example?: exampleDirectiveResolver<any, any, ContextType>;
+  globalOptions?: globalOptionsDirectiveResolver<any, any, ContextType>;
+  httpOperation?: httpOperationDirectiveResolver<any, any, ContextType>;
+}>;
 
-import { MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
-
-import { InContextSdkMethod } from '@graphql-mesh/types';
-
-
-    export namespace BooksTypes {
-      export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-/** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
-  /** The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID. */
-  ID: string;
-  /** The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. */
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-};
-
-export type Query = {
-  book?: Maybe<query_book>;
-};
+export type MeshContext = BooksTypes.Context & BaseMeshContext;
 
 
-export type QuerybookArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-};
+const baseDir = pathModule.join(typeof __dirname === 'string' ? __dirname : '/', '..');
 
-export type query_book = {
-  id?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  authorId?: Maybe<Scalars['String']>;
-  categorieId?: Maybe<Scalars['String']>;
-};
-
-    }
-    export type QueryBooksSdk = {
-  /** undefined **/
-  book: InContextSdkMethod<BooksTypes.Query['book'], BooksTypes.QuerybookArgs, MeshContext>
-};
-
-export type MutationBooksSdk = {
-
-};
-
-export type SubscriptionBooksSdk = {
-
-};
-
-export type BooksContext = {
-      ["Books"]: { Query: QueryBooksSdk, Mutation: MutationBooksSdk, Subscription: SubscriptionBooksSdk },
-    };
-
-export type MeshContext = BooksContext & BaseMeshContext;
-
-
-import { getMesh } from '@graphql-mesh/runtime';
-import { MeshStore, FsStoreStorageAdapter } from '@graphql-mesh/store';
-import { path as pathModule } from '@graphql-mesh/cross-helpers';
-import { fileURLToPath } from '@graphql-mesh/utils';
-
-const importedModules: Record<string, any> = {
-
-};
-
-const baseDir = pathModule.join(__dirname, '..');
-
-const importFn = (moduleId: string) => {
+const importFn: ImportFn = <T>(moduleId: string) => {
   const relativeModuleId = (pathModule.isAbsolute(moduleId) ? pathModule.relative(baseDir, moduleId) : moduleId).split('\\').join('/').replace(baseDir + '/', '');
-  if (!(relativeModuleId in importedModules)) {
-    throw new Error(`Cannot find module '${relativeModuleId}'.`);
+  switch(relativeModuleId) {
+    default:
+      return Promise.reject(new Error(`Cannot find module '${relativeModuleId}'.`));
   }
-  return Promise.resolve(importedModules[relativeModuleId]);
 };
 
 const rootStore = new MeshStore('.mesh', new FsStoreStorageAdapter({
   cwd: baseDir,
   importFn,
-  fileType: 'ts',
+  fileType: "ts",
 }), {
   readonly: true,
   validate: false
 });
 
-
-                import { findAndParseConfig } from '@graphql-mesh/cli';
-                function getMeshOptions() {
-                  console.warn('WARNING: These artifacts are built for development mode. Please run "mesh build" to build production artifacts');
-                  return findAndParseConfig({
-                    dir: baseDir,
-                    artifactsDir: ".mesh",
-                    configName: "mesh",
-                  });
-                }
-              
-
-export const documentsInSDL = /*#__PURE__*/ [];
-
-export async function getBuiltMesh(): Promise<MeshInstance<MeshContext>> {
-  const meshConfig = await getMeshOptions();
-  return getMesh<MeshContext>(meshConfig);
+export function getMeshOptions() {
+  console.warn('WARNING: These artifacts are built for development mode. Please run "mesh build" to build production artifacts');
+  return findAndParseConfig({
+    dir: baseDir,
+    artifactsDir: ".mesh",
+    configName: "mesh",
+    additionalPackagePrefixes: [],
+    initialLoggerPrefix: "🕸️  Mesh",
+  });
 }
 
-export async function getMeshSDK<TGlobalContext = any, TOperationContext = any>(globalContext?: TGlobalContext) {
-  const { sdkRequesterFactory } = await getBuiltMesh();
-  return getSdk<TOperationContext>(sdkRequesterFactory(globalContext));
+export function createBuiltMeshHTTPHandler<TServerContext = {}>(): MeshHTTPHandler<TServerContext> {
+  return createMeshHTTPHandler<TServerContext>({
+    baseDir,
+    getBuiltMesh: getBuiltMesh,
+    rawServeConfig: undefined,
+  })
 }
 
-export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
-export function getSdk<C>(requester: Requester<C>) {
-  return {
+let meshInstance$: Promise<MeshInstance> | undefined;
 
-  };
+export function getBuiltMesh(): Promise<MeshInstance> {
+  if (meshInstance$ == null) {
+    meshInstance$ = getMeshOptions().then(meshOptions => getMesh(meshOptions)).then(mesh => {
+      const id = mesh.pubsub.subscribe('destroy', () => {
+        meshInstance$ = undefined;
+        mesh.pubsub.unsubscribe(id);
+      });
+      return mesh;
+    });
+  }
+  return meshInstance$;
 }
-export type Sdk = ReturnType<typeof getSdk>;
+
+export const execute: ExecuteMeshFn = (...args) => getBuiltMesh().then(({ execute }) => execute(...args));
+
+export const subscribe: SubscribeMeshFn = (...args) => getBuiltMesh().then(({ subscribe }) => subscribe(...args));

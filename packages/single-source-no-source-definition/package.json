@@ -4,14 +4,13 @@
   "main": "index.js",
   "author": "Charly POLY",
   "license": "MIT",
-  "private": "true",
   "scripts": {
     "start": "mesh dev",
     "build": "echo \"noop\";"
   },
   "dependencies": {
-    "@graphql-mesh/cli": "^0.66.0",
-    "@graphql-mesh/json-schema": "^0.27.2",
-    "graphql": "^16.3.0"
+    "@graphql-mesh/cli": "^0.85.4",
+    "@graphql-mesh/json-schema": "^0.94.8",
+    "graphql": "^16.7.1"
   }
 }
