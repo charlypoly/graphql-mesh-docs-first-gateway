@@ -49,7 +49,7 @@ const resolvers: Resolvers = {
       }
       `,
       resolve: async (root, _args, context, info) => {
-        return await context.Books.Query.book({
+        return await context.Books.Query.AppController_book({
           root,
           args: {
             id: root.bookId
