@@ -9,11 +9,11 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.8.18"
+    "@grpc/grpc-js": "^1.8.20"
   },
   "devDependencies": {
     "@protobuf-ts/plugin": "^2.9.0",
-    "esbuild": "^0.18.16",
+    "esbuild": "^0.18.17",
     "grpc-tools": "^1.12.4",
     "rimraf": "^5.0.1"
   }

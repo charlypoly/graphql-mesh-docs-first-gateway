@@ -10,14 +10,14 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "^4.0.1",
+    "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-resolvers": "^4.0.1",
     "graphql": "^16.7.1",
     "graphql-yoga": "4.0.3"
   },
   "devDependencies": {
-    "esbuild": "^0.18.16",
+    "esbuild": "^0.18.17",
     "rimraf": "^5.0.1"
   }
 }
