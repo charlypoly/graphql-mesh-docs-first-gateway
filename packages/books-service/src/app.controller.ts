@@ -7,14 +7,14 @@ import { Category } from './entities/Category';
 @ApiTags('books')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) { }
+  constructor(private readonly appService: AppService) {}
 
   @Get('/books')
   @ApiResponse({
     status: 200,
     type: [Book],
   })
-  listBooks() {
+  books() {
     return this.appService.listBooks();
   }
 
@@ -23,7 +23,7 @@ export class AppController {
     status: 200,
     type: [Category],
   })
-  listBookCategories() {
+  categories() {
     return this.appService.listBookCategories();
   }
 
@@ -38,9 +38,9 @@ export class AppController {
   @ApiParam({
     name: 'id',
     required: true,
-    type: String
+    type: String,
   })
-  findOne(@Param() params) {
+  book(@Param() params) {
     return this.appService.findOneBook(params.id);
   }
 }

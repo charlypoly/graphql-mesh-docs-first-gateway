@@ -4,16 +4,21 @@
   "main": "index.js",
   "author": "Charly POLY",
   "license": "MIT",
-  "private": "true",
   "scripts": {
     "start": "mesh dev",
     "build": "echo \"noop\";"
   },
   "dependencies": {
-    "@graphql-mesh/cli": "^0.66.0",
-    "@graphql-mesh/openapi": "^0.24.4",
-    "@graphql-mesh/transform-filter-schema": "^0.14.38",
-    "@graphql-mesh/transform-rename": "^0.12.28",
-    "graphql": "^16.3.0"
+    "@graphql-mesh/cli": "^0.85.6",
+    "@graphql-mesh/cross-helpers": "^0.4.0",
+    "@graphql-mesh/openapi": "^0.94.10",
+    "@graphql-mesh/store": "^0.94.6",
+    "@graphql-mesh/transform-filter-schema": "^0.94.6",
+    "@graphql-mesh/transform-rename": "^0.94.7",
+    "@graphql-mesh/types": "^0.94.6",
+    "@graphql-mesh/utils": "^0.94.6",
+    "@graphql-tools/utils": "^10.0.4",
+    "graphql": "^16.7.1",
+    "tslib": "^2.6.1"
   }
 }

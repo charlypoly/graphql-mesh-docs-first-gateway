@@ -1,6 +1,7 @@
-import { createServer } from '@graphql-yoga/node';
+import { createSchema, createYoga } from 'graphql-yoga';
 import { readFileSync } from 'node:fs';
 import { Resolvers, Store, Sells } from './resolvers-types';
+import { createServer } from 'node:http';
 
 const schema = readFileSync('schema.graphql', 'utf-8');
 
@@ -58,12 +59,15 @@ const resolvers: Resolvers = {
 };
 
 // Create your server
-const server = createServer({
-  port: 3004,
-  schema: {
+const yoga = createYoga({
+  schema: createSchema({
     typeDefs: schema,
     resolvers,
-  },
+  }),
 });
 
-server.start();
+const server = createServer(yoga)
+
+server.listen(3004, () => {
+  console.log(`🚀 Server ready at http://localhost:3004${yoga.graphqlEndpoint}`);
+});

@@ -2,45 +2,37 @@ schema {
   query: Query
 }
 
-type Query {
-  """
-  
-  
-  Equivalent to GET /books/{id}
-  """
-  book: Book
-  """
-  
-  
-  Equivalent to GET /books
-  """
-  books(
-    """
-    Auto-generated argument that limits the size of returned list of objects/list, selecting the first `n` elements of the list
-    """
-    limit: Int
-  ): [Book]
-  """
-  
-  
-  Equivalent to GET /categories
-  """
-  categories(
-    """
-    Auto-generated argument that limits the size of returned list of objects/list, selecting the first `n` elements of the list
-    """
-    limit: Int
-  ): [Category]
+directive @globalOptions(sourceName: String, endpoint: String, operationHeaders: ObjMap, queryStringOptions: ObjMap, queryParams: ObjMap) on OBJECT
+
+directive @httpOperation(path: String, operationSpecificHeaders: ObjMap, httpMethod: HTTPMethod, isBinary: Boolean, requestBaseBody: ObjMap, queryParamArgMap: ObjMap, queryStringOptionsByParam: ObjMap) on FIELD_DEFINITION
+
+type Query @globalOptions(sourceName: "Books", endpoint: "http://localhost:3002/") {
+  books: [Book] @httpOperation(path: "/books", operationSpecificHeaders: "{\"accept\":\"application/json\"}", httpMethod: GET)
+  booksCategories: [Category] @httpOperation(path: "/categories", operationSpecificHeaders: "{\"accept\":\"application/json\"}", httpMethod: GET)
 }
 
 type Book {
+  id: String!
   authorId: String!
   categorieId: String!
-  id: String!
   title: String!
 }
 
 type Category {
   id: String!
   name: String!
+}
+
+scalar ObjMap
+
+enum HTTPMethod {
+  GET
+  HEAD
+  POST
+  PUT
+  DELETE
+  CONNECT
+  OPTIONS
+  TRACE
+  PATCH
 }
