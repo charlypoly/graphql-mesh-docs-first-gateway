@@ -1,10 +1,10 @@
-import { Server, ServerCredentials } from '@grpc/grpc-js';
+import { join } from 'path';
+import { loadPackageDefinition, Server, ServerCredentials } from '@grpc/grpc-js';
+import { load } from '@grpc/proto-loader';
 
-import { Author } from './proto/authors/v1/authors_service';
+const wrapServerWithReflection = require('grpc-node-server-reflection').default;
 
-import { IAuthorsService, authorsServiceDefinition } from './proto/authors/v1/authors_service.grpc-server';
-
-const authors: Author[] = [
+const authors = [
   {
     editor: 'Gallimard',
     id: '0',
@@ -17,26 +17,42 @@ const authors: Author[] = [
   },
 ];
 
-const service: IAuthorsService = {
-  getAuthor: (call, callback) => {
-    const author = authors.find(a => a.id === call.request.id);
-    if (author) {
-      callback(null, author);
-    } else {
-      callback({ code: 5 });
-    }
-  },
-  listAuthors: (_, callback) => {
-    callback(null, { items: authors });
-  },
-};
 
-const server = new Server();
+async function startServer() {
+  const server: Server = wrapServerWithReflection(new Server());
 
-server.addService(authorsServiceDefinition, service);
+  const packageDefinition = await load('./service.proto', {
+    includeDirs: [__dirname],
+  });
+  const grpcObject = loadPackageDefinition(packageDefinition);
+  server.addService(grpcObject.authors.v1.AuthorsService.service, {
+    getAuthor: (call, callback) => {
+      const author = authors.find(a => a.id === call.request.id);
+      if (author) {
+        callback(null, author);
+      } else {
+        callback({ code: 5 });
+      }
+    },
+    listAuthors: (_, callback) => {
+      callback(null, { items: authors });
+    },
+  });
+  return new Promise<Server>((resolve, reject) => {
+    server.bindAsync('0.0.0.0:3003', ServerCredentials.createInsecure(), (error, port) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      server.start();
 
-server.bindAsync('0.0.0.0:3003', ServerCredentials.createInsecure(), () => {
-  server.start();
+      console.log('Authors Server started, listening: 0.0.0.0:' + port);
+      resolve(server);
+    });
+  });
+}
 
-  console.log('server is running on 0.0.0.0:3003');
+startServer().catch(e => {
+  console.error(e);
+  process.exit(1);
 });

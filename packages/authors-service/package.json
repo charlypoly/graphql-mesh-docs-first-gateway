@@ -5,16 +5,17 @@
   "author": "Charly POLY",
   "license": "MIT",
   "scripts": {
-    "build": "rimraf dist && mkdir dist && esbuild ./src/index.js --bundle --platform=node --target=node20.5 > dist/index.js",
-    "start": "node dist/index.js"
+    "start": "ts-node-dev --respawn --transpile-only ./src/index.ts"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.8.20"
+    "@grpc/grpc-js": "1.9.0",
+    "@grpc/proto-loader": "0.7.8",
+    "google-protobuf": "3.21.2",
+    "grpc-node-server-reflection": "^1.0.2"
   },
   "devDependencies": {
-    "@protobuf-ts/plugin": "^2.9.0",
-    "esbuild": "^0.18.17",
-    "grpc-tools": "^1.12.4",
-    "rimraf": "^5.0.1"
+    "typescript": "^5.1.6",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   }
 }

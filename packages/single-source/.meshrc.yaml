@@ -2,8 +2,7 @@ sources:
   - name: Books
     handler:
       openapi:
-        endpoint: http://localhost:3002/
-        source: ../books-service/openapi3-definition.json
+        source: http://localhost:3002/openapi.json
 transforms:
   - rename:
       renames:

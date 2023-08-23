@@ -5,19 +5,15 @@
   "author": "Charly POLY",
   "license": "MIT",
   "scripts": {
-    "prebuild": "graphql-codegen",
-    "build": "rimraf dist && mkdir dist && esbuild ./index.js --bundle --platform=node --target=node20.5 > dist/index.js",
-    "start": "node dist/index.js"
+    "start": "ts-node-dev --respawn --transpile-only ./src/index.ts"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/typescript": "^4.0.1",
-    "@graphql-codegen/typescript-resolvers": "^4.0.1",
     "graphql": "^16.7.1",
     "graphql-yoga": "4.0.3"
   },
   "devDependencies": {
-    "esbuild": "^0.18.17",
-    "rimraf": "^5.0.1"
+    "typescript": "^5.1.6",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
   }
 }
