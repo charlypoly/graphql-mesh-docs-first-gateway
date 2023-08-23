@@ -22,24 +22,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/core@npm:16.1.0":
-  version: 16.1.0
-  resolution: "@angular-devkit/core@npm:16.1.0"
-  dependencies:
-    ajv: 8.12.0
-    ajv-formats: 2.1.1
-    jsonc-parser: 3.2.0
-    rxjs: 7.8.1
-    source-map: 0.7.4
-  peerDependencies:
-    chokidar: ^3.5.2
-  peerDependenciesMeta:
-    chokidar:
-      optional: true
-  checksum: 6f9719e7d082b0437cd5eae3162eed1b84192900d1571d8a05792285b51d532b827e5dbfc90410181f2a5fdf8cd0e621b207ef3ff9e2927312783980c0e493ec
-  languageName: node
-  linkType: hard
-
 "@angular-devkit/core@npm:16.1.4":
   version: 16.1.4
   resolution: "@angular-devkit/core@npm:16.1.4"
@@ -55,6 +37,24 @@ __metadata:
     chokidar:
       optional: true
   checksum: 1e59add916acd0caae2a99511dd3c7d9e6c068324f7afbad06177f54692175568de0294117a6e0529d750d37cde418e98d3a60b26593591e9601e4df388deb34
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/core@npm:16.1.8":
+  version: 16.1.8
+  resolution: "@angular-devkit/core@npm:16.1.8"
+  dependencies:
+    ajv: 8.12.0
+    ajv-formats: 2.1.1
+    jsonc-parser: 3.2.0
+    rxjs: 7.8.1
+    source-map: 0.7.4
+  peerDependencies:
+    chokidar: ^3.5.2
+  peerDependenciesMeta:
+    chokidar:
+      optional: true
+  checksum: 422d225df2fc1fcc44670fc51ca25873f3d937b20a0fc344f68182927b7ac775aff2c8014d98647133b65da45f220fbed2c234d25787e72865dab975a43ee907
   languageName: node
   linkType: hard
 
@@ -74,19 +74,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@angular-devkit/schematics@npm:16.1.0":
-  version: 16.1.0
-  resolution: "@angular-devkit/schematics@npm:16.1.0"
-  dependencies:
-    "@angular-devkit/core": 16.1.0
-    jsonc-parser: 3.2.0
-    magic-string: 0.30.0
-    ora: 5.4.1
-    rxjs: 7.8.1
-  checksum: 03fc8fcd7bed8cdef51696a9b5aaee5244f0e92395e0d6089ee7c212c457423166574760414ae53575ff01a5f30cf2716cfeab3ad3ac09658823e00f80fdfd04
-  languageName: node
-  linkType: hard
-
 "@angular-devkit/schematics@npm:16.1.4":
   version: 16.1.4
   resolution: "@angular-devkit/schematics@npm:16.1.4"
@@ -97,6 +84,19 @@ __metadata:
     ora: 5.4.1
     rxjs: 7.8.1
   checksum: 100240e35dc6380690a3457e92fb3fc7913bdecc6359709361508e70528ae0e8879fe5f29d0c3e7795d709a7df8f9a7451d7cce52c99e60f353d3689e1d671e6
+  languageName: node
+  linkType: hard
+
+"@angular-devkit/schematics@npm:16.1.8":
+  version: 16.1.8
+  resolution: "@angular-devkit/schematics@npm:16.1.8"
+  dependencies:
+    "@angular-devkit/core": 16.1.8
+    jsonc-parser: 3.2.0
+    magic-string: 0.30.0
+    ora: 5.4.1
+    rxjs: 7.8.1
+  checksum: 9c691145565c8232bb807782ed6dd7de92b540faaa7a806723678964f9f3931fb5dad8d802966b2fcf31f2c388a3e3e8b0c640f8b212b5e3f9845205136f11a0
   languageName: node
   linkType: hard
 
@@ -2737,8 +2737,8 @@ __metadata:
   linkType: hard
 
 "@nestjs/common@npm:^10.1.2":
-  version: 10.1.2
-  resolution: "@nestjs/common@npm:10.1.2"
+  version: 10.2.1
+  resolution: "@nestjs/common@npm:10.2.1"
   dependencies:
     iterare: 1.2.1
     tslib: 2.6.1
@@ -2753,13 +2753,13 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 9cc8211eaac5e0a6a1aa2e39624a61b5020180aa79ac728d1dc75a3007025f0dba84dea4a7a950e021180beda55df97268a6921b386909670b00fb241c92afb7
+  checksum: 251fb8d04aaa80f432a8cd0d3fae9ee60e238967df463168d04782c26681d733268e88f107466d33aa875f67fd442d670b1b1f9dd9f9594c0092393a942a1527
   languageName: node
   linkType: hard
 
 "@nestjs/core@npm:^10.1.2":
-  version: 10.1.2
-  resolution: "@nestjs/core@npm:10.1.2"
+  version: 10.2.1
+  resolution: "@nestjs/core@npm:10.2.1"
   dependencies:
     "@nuxtjs/opencollective": 0.3.2
     fast-safe-stringify: 2.1.1
@@ -2781,7 +2781,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 471b870bfdb791da2ea2c86e220c07221fdf4100c885ed740c12935d95eb2e73bc9cbd10ed96d51de7180fbb4178d29ffdd370b0ff742b311526bfcdbe87e110
+  checksum: 24a8c28856b52e98c90c7e9159bbc151bb43b1da782e5427983ed4f589398b9e077e52c5f748e11cd3c65476bf162163883444713048ef88d43c194acb564ee1
   languageName: node
   linkType: hard
 
@@ -2803,8 +2803,8 @@ __metadata:
   linkType: hard
 
 "@nestjs/platform-express@npm:^10.1.2":
-  version: 10.1.2
-  resolution: "@nestjs/platform-express@npm:10.1.2"
+  version: 10.2.1
+  resolution: "@nestjs/platform-express@npm:10.2.1"
   dependencies:
     body-parser: 1.20.2
     cors: 2.8.5
@@ -2814,22 +2814,22 @@ __metadata:
   peerDependencies:
     "@nestjs/common": ^10.0.0
     "@nestjs/core": ^10.0.0
-  checksum: c2a713b2b43a836060d9b4e29fd05f5c251a2cf9d8d4c0f9db8b3c753773eab40f0e37caf75e60d8ce140dbea0596eaf2494c09c6f2133a31e342b33c5d1f6e3
+  checksum: c69f2ca51f3c252697c983fe67a128174ad2878418b97de9183ce271b1a1f49de90e42ea48c7e6c82fc9c2314c0574a367302fa3b723fd97e38bb9ff8ed86538
   languageName: node
   linkType: hard
 
 "@nestjs/schematics@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "@nestjs/schematics@npm:10.0.1"
+  version: 10.0.2
+  resolution: "@nestjs/schematics@npm:10.0.2"
   dependencies:
-    "@angular-devkit/core": 16.1.0
-    "@angular-devkit/schematics": 16.1.0
+    "@angular-devkit/core": 16.1.8
+    "@angular-devkit/schematics": 16.1.8
     comment-json: 4.2.3
     jsonc-parser: 3.2.0
     pluralize: 8.0.0
   peerDependencies:
     typescript: ">=4.8.2"
-  checksum: 111fa24df8208ba63642e5d08f2ee2ffe8a6fb971bd83a25e0ef2f3bc1f5197e4fd64384258e6a23024d225860ebd920e1c825640e88844b2134857890f93def
+  checksum: bb54681dcf4f6c20315184c6b512998bbd2cb366dc197d0262efd4c0f25b87317cb305cf4b895237cbb712c80a5d7109f621e985f9de9cddd70d2bc5d2be7d62
   languageName: node
   linkType: hard
 
@@ -2861,8 +2861,8 @@ __metadata:
   linkType: hard
 
 "@nestjs/testing@npm:^10.1.2":
-  version: 10.1.2
-  resolution: "@nestjs/testing@npm:10.1.2"
+  version: 10.2.1
+  resolution: "@nestjs/testing@npm:10.2.1"
   dependencies:
     tslib: 2.6.1
   peerDependencies:
@@ -2875,7 +2875,7 @@ __metadata:
       optional: true
     "@nestjs/platform-express":
       optional: true
-  checksum: 561c5776928360cee30f2716d0326e90990eeb23267c7ebab7fa6dde8319dbc5ea3bf9f3afc3fcc4c58a2692aa019f4122c4005c0df23ff588bb26445dcbe416
+  checksum: edf8d3fed1cd92628d135902b9ad57e4bb1abb3c7a2198486d7d33718e919411c786994f85eec797d0622c8f9ababdbb26f8de2806eca4879a8e1096d83c7cf9
   languageName: node
   linkType: hard
 
