@@ -2281,16 +2281,16 @@ __metadata:
   linkType: hard
 
 "@grpc/grpc-js@npm:^1.1.7, @grpc/grpc-js@npm:^1.8.20":
-  version: 1.8.20
-  resolution: "@grpc/grpc-js@npm:1.8.20"
+  version: 1.9.1
+  resolution: "@grpc/grpc-js@npm:1.9.1"
   dependencies:
-    "@grpc/proto-loader": ^0.7.0
+    "@grpc/proto-loader": ^0.7.8
     "@types/node": ">=12.12.47"
-  checksum: 9a18b3b7342b13259567c7fe6161ba1b43d85ee911ed5003939dc392a0575724014978c40e6edb4eedb035126a8d3c66dcf6cb7678153565c2ae77c3bd4b3e97
+  checksum: eb01e247a5fefb7730a1f934318aee5676390845efcde362bcfdd22c7278f57c2e2646d47e54ce84e75b061c41b0e412c3d4bd7d6ddccbc51e012e9984d28118
   languageName: node
   linkType: hard
 
-"@grpc/proto-loader@npm:0.7.8, @grpc/proto-loader@npm:^0.7.0":
+"@grpc/proto-loader@npm:0.7.8, @grpc/proto-loader@npm:^0.7.8":
   version: 0.7.8
   resolution: "@grpc/proto-loader@npm:0.7.8"
   dependencies:
