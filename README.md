@@ -2,11 +2,14 @@
 
 ## Setup
 
+```
+yarn install
+```
 
 ### Build all APIs
 
 ```
-yarn workspaces run build
+yarn workspaces run foreach build
 ```
 
 <p>&nbsp;</p>
@@ -28,7 +31,7 @@ More information on https://graphql-mesh.com/docs/getting-started/your-first-mes
 ### Start the single source (Books API without definition) Mesh Gateway
 
 ```
-yarn run single-source-no-source-definition
+yarn run start-single-source-no-source-definition
 ```
 
 More information on https://graphql-mesh.com/docs/getting-started/sources-with-no-definition
