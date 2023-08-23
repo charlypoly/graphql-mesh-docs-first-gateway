@@ -1,11 +1,10 @@
 import { createSchema, createYoga } from 'graphql-yoga';
 import { readFileSync } from 'node:fs';
-import { Resolvers, Store, Sells } from './resolvers-types';
 import { createServer } from 'node:http';
 
 const schema = readFileSync('schema.graphql', 'utf-8');
 
-const stores: Store[] = [
+const stores = [
   {
     id: '0',
     location: 'Paris, France',
@@ -20,7 +19,7 @@ const stores: Store[] = [
   },
 ];
 
-const bookSells: Sells[] = [
+const bookSells = [
   {
     bookId: '0',
     sellsCount: 1932,
@@ -51,7 +50,7 @@ const bookSells: Sells[] = [
   },
 ];
 
-const resolvers: Resolvers = {
+const resolvers = {
   Query: {
     bookSells: (_p, args) => bookSells.filter(bs => bs.storeId === args.storeId),
     stores: () => stores,
