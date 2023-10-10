@@ -2363,9 +2363,9 @@ fbjs@^3.0.0:
     ua-parser-js "^1.0.35"
 
 fets@^0.4.12:
-  version "0.4.13"
-  resolved "https://registry.yarnpkg.com/fets/-/fets-0.4.13.tgz#4a285ff06978886e1b3ecd0a620ce6ca8931e2ee"
-  integrity sha512-K5Q8qYYLxi4YjGG+kEPlpqbq5UQzcM9uGAB2KfZAHuEsAm4tlphtwKIAk1egaeFDIM44fdLTKT7ijOJDnrbDeg==
+  version "0.4.15"
+  resolved "https://registry.yarnpkg.com/fets/-/fets-0.4.15.tgz#41db5b00d9d8776c3d42ec981e8c44c301da57e4"
+  integrity sha512-WrZZOBpy9b8XSZTJ/MuIJZ9K6lgxFqLD/Z6Uq/vVwhLlul7bW3h35stvzA86XVIDC4jLE0/w1stN5sBEviiMcA==
   dependencies:
     "@ardatan/fast-json-stringify" "^0.0.6"
     "@whatwg-node/cookie-store" "^0.2.0"
