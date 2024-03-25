@@ -6,7 +6,7 @@
     "start": "ts-node-dev --respawn --transpile-only ./src/index.ts"
   },
   "dependencies": {
-    "fets": "^0.4.12"
+    "fets": "^0.8.0"
   },
   "devDependencies": {
     "typescript": "^5.1.6",
