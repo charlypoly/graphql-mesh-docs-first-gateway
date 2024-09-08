@@ -17,6 +17,6 @@
     "start-multiple-sources-prog-resolvers": "concurrently --kill-others \"yarn workspace authors-service start\" \"yarn workspace stores-service start\"  \"yarn workspace books-service start\"  \"yarn workspace multiple-sources-prog-resolvers start\""
   },
   "dependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^9.0.0"
   }
 }
