@@ -9,10 +9,10 @@
     "build": "echo \"noop\";"
   },
   "dependencies": {
-    "@graphql-mesh/cli": "^0.87.2",
-    "@graphql-mesh/openapi": "^0.95.3",
-    "@graphql-mesh/transform-filter-schema": "^0.95.0",
-    "@graphql-mesh/transform-rename": "^0.95.0",
+    "@graphql-mesh/cli": "^0.98.0",
+    "@graphql-mesh/openapi": "^0.108.0",
+    "@graphql-mesh/transform-filter-schema": "^0.103.0",
+    "@graphql-mesh/transform-rename": "^0.103.0",
     "graphql": "^16.7.1",
     "tslib": "^2.6.1"
   }
