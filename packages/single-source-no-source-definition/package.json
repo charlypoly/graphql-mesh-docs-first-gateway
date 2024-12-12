@@ -9,12 +9,12 @@
     "build": "echo \"noop\";"
   },
   "dependencies": {
-    "@graphql-mesh/cli": "^0.87.2",
+    "@graphql-mesh/cli": "^0.98.0",
     "@graphql-mesh/cross-helpers": "^0.4.0",
-    "@graphql-mesh/json-schema": "^0.95.0",
-    "@graphql-mesh/store": "^0.95.0",
-    "@graphql-mesh/types": "^0.95.0",
-    "@graphql-mesh/utils": "^0.95.0",
+    "@graphql-mesh/json-schema": "^0.108.0",
+    "@graphql-mesh/store": "^0.103.0",
+    "@graphql-mesh/types": "^0.103.0",
+    "@graphql-mesh/utils": "^0.103.0",
     "@graphql-tools/utils": "^10.0.4",
     "graphql": "^16.7.1",
     "tslib": "^2.6.1"
