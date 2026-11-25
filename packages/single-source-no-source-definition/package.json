@@ -16,7 +16,7 @@
     "@graphql-mesh/types": "^0.95.0",
     "@graphql-mesh/utils": "^0.95.0",
     "@graphql-tools/utils": "^10.0.4",
-    "graphql": "^16.7.1",
+    "graphql": "^17.0.0",
     "tslib": "^2.6.1"
   }
 }
